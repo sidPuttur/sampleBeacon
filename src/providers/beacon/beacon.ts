@@ -20,19 +20,18 @@ delegate: any;
 
   initialise(): any {
     console.log("Inside initialize");
-    return new Promise((resolve, reject) => {
-        console.log("Inside promise");
+    let promise =  new Promise((resolve, reject) => {
+  
       // we need to be running on a device 
       if (this.platform.is('cordova')) {
-        console.log("Inside cordova");
+     
         // Request permission to use location on iOS
-        this.IBeacon.requestAlwaysAuthorization().then(() => {
+        this.IBeacon.requestAlwaysAuthorization();
         console.log("Inside requestAlwaysAuthorization");
 
         // create a new delegate and register it with the native layer
           this.delegate = this.IBeacon.Delegate();
-          console.log("Inside Delegate");
-          console.log(this.delegate, "my delegate");
+      
         // Subscribe to some of the delegate's event handlers
         this.delegate.didRangeBeaconsInRegion()
           .subscribe(
@@ -45,7 +44,7 @@ delegate: any;
           );
 
         // setup a beacon region
-        this.region = this.IBeacon.BeaconRegion('Genting-Beacon', 'beac1234-1234-1234-1234-123412341234');
+        this.region = this.IBeacon.BeaconRegion('my-IBeacon', 'abca1234-1234-1234-1234-123412341234');
                   console.log("Inside Region");
 
         // start ranging
@@ -60,18 +59,15 @@ delegate: any;
             resolve(false);
           }
           );
-        }, err => {
-          console.log("Request authorization error");
-      });
+      
 
       } else {
         console.error("This application needs to be running on a device");
         resolve(false);
       }
     });
-    // console.log("returned");
-    // console.log(promise, "promise");
-    // return promise;
+  
+     return promise;
   }
 
 

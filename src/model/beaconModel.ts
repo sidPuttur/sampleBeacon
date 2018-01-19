@@ -6,11 +6,7 @@ export class BeaconModel {
   major: number;
   minor: number;
   rssi: number;
-  tx: number;
-  accuracy: number;
-  proximity: string;
-  distance: any;
-  arrivalTime: any;
+
 
   constructor(public beacon: any) {
 
@@ -18,11 +14,6 @@ export class BeaconModel {
     this.major = beacon.major;
     this.minor = beacon.minor;
     this.rssi = beacon.rssi;
-    this.tx = beacon.tx;
-    this.accuracy = beacon.accuracy;
-    this.proximity = beacon.proximity;
-    this.distance = '';
-    this.arrivalTime = moment();
-
+ 
   }
 }

@@ -2,9 +2,6 @@ import { Component,NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { BeaconProvider } from '../../providers/beacon/beacon';
 
-
-
-
 import { BeaconModel } from '../../model/beaconModel';
 
 @IonicPage()
@@ -15,7 +12,7 @@ import { BeaconModel } from '../../model/beaconModel';
 export class HomePage {
 
  
- 
+  beaconList: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, private events: Events,
     private platform: Platform, public beaconProvider: BeaconProvider, public zone: NgZone) {
    
@@ -24,11 +21,7 @@ export class HomePage {
 
   ionViewDidLoad() {
    
-  }
-
-  ngOnViewInit() {
-
-     try {
+   try {
       this.platform.ready().then(() => {
         this.beaconProvider.initialise().then((isInitialised) => {
           if (isInitialised)
@@ -39,9 +32,10 @@ export class HomePage {
     } catch (e) {
       console.error(e);
     }  
-   
     
   }
+
+
 
   listenToBeaconEvents() {
     this.events.subscribe('didRangeBeaconsInRegion', (data) => {
@@ -56,6 +50,7 @@ export class HomePage {
 
           let beaconObject = new BeaconModel(beacon);
           console.log(beaconObject);
+          this.beaconList.push(beaconObject);
          
         })
       })
